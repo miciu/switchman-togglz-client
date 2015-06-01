@@ -7,7 +7,7 @@ import org.togglz.core.repository.StateRepository;
 import org.togglz.core.spi.FeatureProvider;
 
 
-public class CookieOverwritingPersistentStateRepositoryFilter extends TooglzCookieStateRepositoryFilter {
+public class CookieOverwritingPersistentStateRepositoryFilter extends TogglzCookieStateRepositoryFilter {
   private final StateRepository persistentStateRepository;
 
   public CookieOverwritingPersistentStateRepositoryFilter(final StateRepository persistentStateRepository,

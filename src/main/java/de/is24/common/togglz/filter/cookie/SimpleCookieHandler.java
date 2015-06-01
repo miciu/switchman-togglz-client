@@ -29,7 +29,7 @@ public class SimpleCookieHandler implements CookieHandler {
   }
 
   @Override
-  public void safePayloadToCookie(String cookiePayload, HttpServletResponse response) {
+  public void savePayloadToCookie(String cookiePayload, HttpServletResponse response) {
     Cookie cookie = new Cookie(cookieName, cookiePayload);
     cookie.setPath(cookiePath);
     cookie.setMaxAge(-1);

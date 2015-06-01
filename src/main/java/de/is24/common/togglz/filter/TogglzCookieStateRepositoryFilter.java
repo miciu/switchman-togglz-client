@@ -33,13 +33,13 @@ import java.util.Set;
  * As this has to be done, before Togglz comes into play, this Filter has to be placed before the Togglz filter.
  *
  */
-public class TooglzCookieStateRepositoryFilter extends ThreadLocalStateRepository implements Filter {
-  private String togglzEditPagePath = "/internal/togglz/edit";
+public class TogglzCookieStateRepositoryFilter extends ThreadLocalStateRepository implements Filter {
+  String togglzEditPagePath = "/internal/togglz/edit";
 
   private final FeatureProvider featureProvider;
   private final CookieHandler cookieHandler;
 
-  public TooglzCookieStateRepositoryFilter(FeatureProvider featureProvider, CookieHandler cookieHandler) {
+  public TogglzCookieStateRepositoryFilter(FeatureProvider featureProvider, CookieHandler cookieHandler) {
     this.featureProvider = featureProvider;
     this.cookieHandler = cookieHandler;
   }
@@ -50,7 +50,7 @@ public class TooglzCookieStateRepositoryFilter extends ThreadLocalStateRepositor
                        final FilterChain filterChain) throws IOException, ServletException {
     HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
     setModificationState(false);
-    setFeatureMap(buildFeatureMapFromRequest(httpRequest));
+    setThreadLocalFeatureMap(buildFeatureMapFromRequest(httpRequest));
     try {
       if (isTogglzPostRequest(httpRequest)) {
         handleTogglzPostRequest(servletRequest, servletResponse, filterChain);
@@ -75,7 +75,7 @@ public class TooglzCookieStateRepositoryFilter extends ThreadLocalStateRepositor
       filterChain.doFilter(servletRequest, wrapper);
     } finally {
       if (getModificationState()) {
-        safeFeatureMapToCookie(getFeatureMap(), wrapper);
+        safeFeatureMapToCookie(getThreadLocalFeatureMap(), wrapper);
       }
       wrapper.send();
     }
@@ -101,8 +101,10 @@ public class TooglzCookieStateRepositoryFilter extends ThreadLocalStateRepositor
 
   private Map<String, FeatureState> buildFeatureMapFromRequest(final HttpServletRequest request) {
     String cookiePayload = cookieHandler.retrieveCookiePayload(request);
-    Map<String, FeatureState> featureMap = deserializeFeatureMap(cookiePayload);
-    ;
+    Map<String, FeatureState> featureMap = null;
+    if (!cookiePayload.isEmpty()) {
+      featureMap = deserializeFeatureMap(cookiePayload);
+    }
     if (featureMap == null) {
       featureMap = new HashMap<>();
     }
@@ -146,7 +148,7 @@ public class TooglzCookieStateRepositoryFilter extends ThreadLocalStateRepositor
   private void safeFeatureMapToCookie(final Map<String, FeatureState> featureMap,
                                       final HttpServletResponse response) {
     String cookiePayload = serializeFeatureMap(featureMap);
-    cookieHandler.safePayloadToCookie(cookiePayload, response);
+    cookieHandler.savePayloadToCookie(cookiePayload, response);
   }
 
 }

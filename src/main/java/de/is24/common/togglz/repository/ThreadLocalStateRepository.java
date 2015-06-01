@@ -3,30 +3,33 @@ package de.is24.common.togglz.repository;
 import org.togglz.core.Feature;
 import org.togglz.core.repository.FeatureState;
 import org.togglz.core.repository.StateRepository;
+import java.util.HashMap;
 import java.util.Map;
 
 
 public class ThreadLocalStateRepository implements StateRepository {
-  private final ThreadLocal<Map<String, FeatureState>> featureMap = new InheritableThreadLocal<>();
+  private final ThreadLocal<Map<String, FeatureState>> threadLocalFeatureMap = new InheritableThreadLocal<>();
   private final ThreadLocal<Boolean> modificationState = new InheritableThreadLocal<>();
 
   @Override
   public FeatureState getFeatureState(Feature feature) {
-    return featureMap.get().get(feature.name());
+    return getOrCreateMapForCurrentThread().get(feature.name());
   }
 
   @Override
   public void setFeatureState(FeatureState featureState) {
-    featureMap.get().put(featureState.getFeature().name(), featureState);
+    Map<String, FeatureState> featureMap = getOrCreateMapForCurrentThread();
+    featureMap.put(featureState.getFeature().name(), featureState);
+    threadLocalFeatureMap.set(featureMap);
     modificationState.set(true);
   }
 
-  protected void setFeatureMap(Map<String, FeatureState> featureStateMap) {
-    featureMap.set(featureStateMap);
+  protected void setThreadLocalFeatureMap(Map<String, FeatureState> featureStateMap) {
+    threadLocalFeatureMap.set(featureStateMap);
   }
 
-  protected Map<String, FeatureState> getFeatureMap() {
-    return featureMap.get();
+  protected Map<String, FeatureState> getThreadLocalFeatureMap() {
+    return threadLocalFeatureMap.get();
   }
 
   protected void setModificationState(Boolean modified) {
@@ -38,7 +41,15 @@ public class ThreadLocalStateRepository implements StateRepository {
   }
 
   protected void resetThreadLocals() {
-    featureMap.remove();
+    threadLocalFeatureMap.remove();
     modificationState.remove();
+  }
+
+  private Map<String, FeatureState> getOrCreateMapForCurrentThread() {
+    Map<String, FeatureState> featureStatesMap = threadLocalFeatureMap.get();
+    if (featureStatesMap == null) {
+      featureStatesMap = new HashMap<>(1);
+    }
+    return featureStatesMap;
   }
 }

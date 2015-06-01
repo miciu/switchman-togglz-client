@@ -7,5 +7,5 @@ import javax.servlet.http.HttpServletResponse;
 public interface CookieHandler {
   String retrieveCookiePayload(HttpServletRequest request);
 
-  void safePayloadToCookie(String cookiePayload, HttpServletResponse response);
+  void savePayloadToCookie(String cookiePayload, HttpServletResponse response);
 }
