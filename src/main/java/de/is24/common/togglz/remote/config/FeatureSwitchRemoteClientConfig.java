@@ -2,14 +2,13 @@ package de.is24.common.togglz.remote.config;
 
 import de.is24.common.hateoas.HateoasLinkProvider;
 import de.is24.common.hystrix.HystrixConfiguration;
+import de.is24.common.togglz.filter.CookieOverwritingPersistentStateRepositoryFilter;
 import de.is24.common.togglz.filter.cookie.CookieHandler;
-import de.is24.common.togglz.filter.cookie.SimpleCookieHandler;
 import de.is24.common.togglz.provider.MergingFeatureProvider;
 import de.is24.common.togglz.provider.RemoteFeatureSwitchProvider;
 import de.is24.common.togglz.remote.RemoteFeatureStatesClient;
 import de.is24.common.togglz.remote.api.serialization.HalEnabledObjectMapper;
 import de.is24.common.togglz.remote.http.PreEmptiveAuthHttpRequestFactory;
-import de.is24.common.togglz.filter.CookieOverwritingPersistentStateRepositoryFilter;
 import de.is24.common.togglz.repository.NoOpStateRepository;
 import de.is24.common.togglz.repository.RemoteEnabledStateRepository;
 import org.apache.commons.lang.NotImplementedException;
@@ -95,8 +94,12 @@ public class FeatureSwitchRemoteClientConfig {
   }
 
   @Bean
-  public CookieHandler cookieHelper() {
-    return new SimpleCookieHandler();
+  public CookieHandler cookieHander() {
+    throw new NotImplementedException(
+      "\nYou must define a CookieHandler in your configuration like so: \n\n @Bean\n" +
+      "  public CookieHandler cookieHandler() {\n" +
+      "    return new SimpleCookieHandler();\n" +
+      "  }");
   }
 
   @Autowired
@@ -106,7 +109,7 @@ public class FeatureSwitchRemoteClientConfig {
     CookieOverwritingPersistentStateRepositoryFilter repository = new CookieOverwritingPersistentStateRepositoryFilter(
       togglzRemoteClientSettings.isRemoteEnabled() ? remoteEnabledStateRepository : localStateRepository(),
       featureProvider,
-      new SimpleCookieHandler());
+      cookieHandler);
     repository.setTogglzEditPagePath(togglzEditPagePath);
     return repository;
   }
