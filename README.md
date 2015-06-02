@@ -1,15 +1,24 @@
-# switchman-togglz-client
+```
+  _________       .__  __         .__
+ /   _____/_  _  _|__|/  |_  ____ |  |__   _____ _____    ____
+ \_____  \\ \/ \/ /  \   __\/ ___\|  |  \ /     \\__  \  /    \
+ /        \\     /|  ||  | \  \___|   Y  \  Y Y  \/ __ \|   |  \
+/_______  / \/\_/ |__||__|  \___  >___|  /__|_|  (____  /___|  /
+        \/                      \/     \/      \/     \/     \/
+                                  by ImmobilienScout24.de
+```
+# IS24 Switchman Togglz Client
 [![Build Status](https://api.travis-ci.org/ImmobilienScout24/switchman-togglz-client.svg?branch=master)](https://travis-ci.org/ImmobilienScout24/switchman-togglz-client)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.is24.common/switchman-togglz-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.is24.common/switchman-togglz-client/)
 
-IS24-switchman togglz client that can be used to merge local feature state with remote feature state.
+[IS24 Switchman](https://github.com/ImmobilienScout24/switchman) [Togglz](http://www.togglz.org/) client that can be used to merge local feature state with remote feature state.
 
 ## What is this for?
 If you have a lot of microservices and you want to be able to switch on a feature not on each service (instance?!) but on 
 a environment (like testing/production stage). This might be better than enabling the feature in all microservices or even worse send the feature switch state in your internal
 APIs.
 
-This client uses the Togglz framework and enhances this with a remote feature repository stored in IS24-Switchman service.
+This client uses the [Togglz](http://www.togglz.org/) framework and enhances this with a remote feature repository stored in IS24-Switchman service.
 
 If this is configured correctly, it works like this:
 - You define feature switches in an enum locally
