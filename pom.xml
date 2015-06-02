@@ -1,11 +1,10 @@
 <!--suppress MavenModelInspection -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.is24.common</groupId>
   <artifactId>switchman-togglz-client</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>switchman-togglz-client</name>
   <description>Togglz client for connecting a spring application to IS24 Switchman.</description>
   <url>https://github.com/ImmobilienScout24/switchman-togglz-client</url>
@@ -46,7 +45,7 @@
     <connection>scm:git:https://github.com/ImmobilienScout24/switchman-togglz-client.git</connection>
     <url>scm:git:https://github.com/ImmobilienScout24/switchman-togglz-client.git</url>
     <developerConnection>scm:git:https://github.com/ImmobilienScout24/switchman-togglz-client.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>switchman-togglz-client-1.0</tag>
   </scm>
 
   <properties>
