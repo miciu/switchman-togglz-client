@@ -93,15 +93,6 @@ public class FeatureSwitchRemoteClientConfig {
     return new SingleUserProvider("admin", true);
   }
 
-  @Bean
-  public CookieHandler cookieHander() {
-    throw new NotImplementedException(
-      "\nYou must define a CookieHandler in your configuration like so: \n\n @Bean\n" +
-      "  public CookieHandler cookieHandler() {\n" +
-      "    return new SimpleCookieHandler();\n" +
-      "  }");
-  }
-
   @Autowired
   @Bean
   public CookieOverwritingPersistentStateRepositoryFilter cookieOverwritingPersistentStateRepository(
