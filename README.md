@@ -4,8 +4,8 @@
 IS24-switchman togglz client that can be used to merge local feature state with remote feature state.
 
 ## What is this for?
-If you have a lot of microservices and you want to be able to switch on a feature not on a service but on your production
-stage. This might be better than enabling the feature in all microservices or even worse send the feature switch state in your internal
+If you have a lot of microservices and you want to be able to switch on a feature not on each service (instance?!) but on 
+a environment (like testing/production stage). This might be better than enabling the feature in all microservices or even worse send the feature switch state in your internal
 APIs.
 
 This client uses the Togglz framework and enhances this with a remote feature repository stored in IS24-Switchman service.
