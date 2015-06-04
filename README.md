@@ -9,6 +9,7 @@
 ```
 # IS24 Switchman Togglz Client
 [![Build Status](https://api.travis-ci.org/ImmobilienScout24/switchman-togglz-client.svg?branch=master)](https://travis-ci.org/ImmobilienScout24/switchman-togglz-client)
+[![Coverage Status](https://coveralls.io/repos/ImmobilienScout24/switchman-togglz-client/badge.svg)](https://coveralls.io/r/ImmobilienScout24/switchman-togglz-client)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.is24.common/switchman-togglz-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.is24.common/switchman-togglz-client/)
 
 [IS24 Switchman](https://github.com/ImmobilienScout24/switchman) [Togglz](http://www.togglz.org/) client that can be used to merge local feature state with remote feature state.
