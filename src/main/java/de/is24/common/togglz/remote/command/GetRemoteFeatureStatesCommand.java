@@ -19,6 +19,7 @@ import java.util.Collections;
 public class GetRemoteFeatureStatesCommand
   extends AbstractFeatureStateRemoteCommand<Resources<Resource<RemoteFeatureState>>> {
   private static final Logger LOGGER = LoggerFactory.getLogger(GetRemoteFeatureStatesCommand.class);
+  public static final String PAGE_SIZE = "size";
   private final String remoteApiUri;
 
   public GetRemoteFeatureStatesCommand(HystrixConfiguration hysterixConfiguration, RestOperations restOperations,
@@ -31,7 +32,7 @@ public class GetRemoteFeatureStatesCommand
   @Override
   protected Resources<Resource<RemoteFeatureState>> runCommand() throws Exception {
     Link linkToConfigurations = getLinkByName(remoteApiUri, RemoteFeatureState.REL).expand(
-        Collections.singletonMap("size", Integer.MAX_VALUE)
+        Collections.singletonMap(PAGE_SIZE, Integer.MAX_VALUE)
     );
 
     ResponseEntity<Resources<Resource<RemoteFeatureState>>> responseEntity = restOperations.exchange(
