@@ -30,7 +30,9 @@ public class GetRemoteFeatureStatesCommand
 
   @Override
   protected Resources<Resource<RemoteFeatureState>> runCommand() throws Exception {
-    Link linkToConfigurations = getLinkByName(remoteApiUri, RemoteFeatureState.REL).expand();
+    Link linkToConfigurations = getLinkByName(remoteApiUri, RemoteFeatureState.REL).expand(
+        Collections.singletonMap("size", Integer.MAX_VALUE)
+    );
 
     ResponseEntity<Resources<Resource<RemoteFeatureState>>> responseEntity = restOperations.exchange(
       linkToConfigurations.getHref(),
