@@ -19,18 +19,33 @@ import java.util.Collections;
 public class GetRemoteFeatureStatesCommand
   extends AbstractFeatureStateRemoteCommand<Resources<Resource<RemoteFeatureState>>> {
   private static final Logger LOGGER = LoggerFactory.getLogger(GetRemoteFeatureStatesCommand.class);
+  public static final String PAGE_SIZE = "size";
   private final String remoteApiUri;
+  private final int pageSize;
 
-  public GetRemoteFeatureStatesCommand(HystrixConfiguration hysterixConfiguration, RestOperations restOperations,
+  public GetRemoteFeatureStatesCommand(HystrixConfiguration hysterixConfiguration,
+                                       RestOperations restOperations,
                                        HateoasLinkProvider featureSwitchHateoasLinkProvider,
                                        String remoteConfigurationProviderUri) {
+    this(hysterixConfiguration, restOperations, featureSwitchHateoasLinkProvider, remoteConfigurationProviderUri,
+        1000);
+  }
+
+  public GetRemoteFeatureStatesCommand(HystrixConfiguration hysterixConfiguration,
+                                       RestOperations restOperations,
+                                       HateoasLinkProvider featureSwitchHateoasLinkProvider,
+                                       String remoteConfigurationProviderUri,
+                                       int pageSize) {
     super(hysterixConfiguration.getConfiguration(COMMAND_GROUP_KEY), restOperations, featureSwitchHateoasLinkProvider);
     this.remoteApiUri = remoteConfigurationProviderUri;
+    this.pageSize = pageSize;
   }
+
 
   @Override
   protected Resources<Resource<RemoteFeatureState>> runCommand() throws Exception {
-    Link linkToConfigurations = getLinkByName(remoteApiUri, RemoteFeatureState.REL).expand();
+    Link linkToConfigurations = getLinkByName(remoteApiUri, RemoteFeatureState.REL)
+        .expand(Collections.singletonMap(PAGE_SIZE, pageSize));
 
     ResponseEntity<Resources<Resource<RemoteFeatureState>>> responseEntity = restOperations.exchange(
       linkToConfigurations.getHref(),
