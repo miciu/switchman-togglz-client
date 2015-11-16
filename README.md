@@ -35,7 +35,7 @@ Add dependency to switchman-togglz-client to you pom.xml
     <dependency>
       <groupId>de.is24.common</groupId>
       <artifactId>switchman-togglz-client</artifactId>
-      <version>1.1</version>
+      <version>1.2</version>
     </dependency>
 ```
 You may also have to add Togglz dependencies since the library uses provided scope a lot.
