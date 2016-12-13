@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 
 
 public class BufferingResponseWrapper extends HttpServletResponseWrapper {
+  private final static int MAX_SIZE = 16384;
   private final HttpServletResponse wrappedResponse;
   private final ByteBufferStream buf = new ByteBufferStream();
   private final PrintWriter writer = new PrintWriter(buf);
@@ -18,7 +19,7 @@ public class BufferingResponseWrapper extends HttpServletResponseWrapper {
   public BufferingResponseWrapper(final HttpServletResponse httpServletResponse) {
     super(httpServletResponse);
     wrappedResponse = httpServletResponse;
-    wrappedResponse.setBufferSize(Integer.MAX_VALUE);
+    wrappedResponse.setBufferSize(MAX_SIZE);
   }
 
   @Override
